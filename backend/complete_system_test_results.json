@@ -1,0 +1,17 @@
+{
+  "test_results": {
+    "Health Check": true,
+    "Ingestion": false,
+    "Citation System": true,
+    "Batch Queries": true,
+    "Performance Metrics": true,
+    "System Stats": true
+  },
+  "summary": {
+    "total_tests": 6,
+    "passed_tests": 5,
+    "failed_tests": 1,
+    "success_rate": "83.3%"
+  },
+  "timestamp": "2025-08-31 14:07:15"
+}

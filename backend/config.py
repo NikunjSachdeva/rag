@@ -18,9 +18,9 @@ class Config:
     # Cohere settings
     COHERE_API_KEY = os.getenv("COHERE_API_KEY")
     
-    # Performance optimization settings
-    EMBEDDING_BATCH_SIZE = int(os.getenv("EMBEDDING_BATCH_SIZE", "64"))
-    UPSERT_BATCH_SIZE = int(os.getenv("UPSERT_BATCH_SIZE", "100"))
+    # Performance optimization settings (optimized for reliability)
+    EMBEDDING_BATCH_SIZE = int(os.getenv("EMBEDDING_BATCH_SIZE", "32"))  # Reduced for better reliability
+    UPSERT_BATCH_SIZE = int(os.getenv("UPSERT_BATCH_SIZE", "50"))       # Reduced for better reliability
     THREAD_POOL_WORKERS = int(os.getenv("THREAD_POOL_WORKERS", "4"))
     
     # Caching settings
@@ -28,13 +28,13 @@ class Config:
     RERANK_CACHE_TTL = int(os.getenv("RERANK_CACHE_TTL", "600"))       # 10 minutes
     MAX_CACHE_SIZE = int(os.getenv("MAX_CACHE_SIZE", "1000"))
     
-    # Text processing settings
-    CHUNK_SIZE = int(os.getenv("CHUNK_SIZE", "1000"))
-    CHUNK_OVERLAP = int(os.getenv("CHUNK_OVERLAP", "150"))
+    # Text processing settings (optimized for timeout prevention)
+    CHUNK_SIZE = int(os.getenv("CHUNK_SIZE", "800"))      # Reduced to avoid timeouts
+    CHUNK_OVERLAP = int(os.getenv("CHUNK_OVERLAP", "120")) # Reduced proportionally
     
-    # API timeout settings
-    REQUEST_TIMEOUT = int(os.getenv("REQUEST_TIMEOUT", "30"))
-    MAX_RETRIES = int(os.getenv("MAX_RETRIES", "2"))
+    # API timeout settings (increased for reliability)
+    REQUEST_TIMEOUT = int(os.getenv("REQUEST_TIMEOUT", "120"))  # 2 minutes
+    MAX_RETRIES = int(os.getenv("MAX_RETRIES", "3"))           # Increased retries
     
     # Query optimization
     MAX_QUERY_LENGTH = int(os.getenv("MAX_QUERY_LENGTH", "2000"))
@@ -61,6 +61,23 @@ class Config:
             "rerank_cache_ttl": cls.RERANK_CACHE_TTL,
             "max_cache_size": cls.MAX_CACHE_SIZE,
         }
+    
+    @classmethod
+    def get_reliability_settings(cls) -> Dict[str, Any]:
+        """Get reliability-focused settings"""
+        return {
+            "timeout_prevention": {
+                "chunk_size": cls.CHUNK_SIZE,
+                "embedding_batch_size": cls.EMBEDDING_BATCH_SIZE,
+                "request_timeout": cls.REQUEST_TIMEOUT,
+                "max_retries": cls.MAX_RETRIES,
+            },
+            "fallback_strategies": {
+                "batch_splitting": True,
+                "placeholder_embeddings": True,
+                "exponential_backoff": True,
+            }
+        }
 
 # Performance monitoring
 class PerformanceMetrics:
@@ -71,6 +88,8 @@ class PerformanceMetrics:
         self.query_times = []
         self.embedding_times = []
         self.pinecone_times = []
+        self.timeout_errors = 0
+        self.retry_attempts = 0
     
     def add_ingestion_time(self, time_taken: float):
         self.ingestion_times.append(time_taken)
@@ -82,11 +101,25 @@ class PerformanceMetrics:
         if len(self.query_times) > 100:
             self.query_times.pop(0)
     
+    def add_timeout_error(self):
+        self.timeout_errors += 1
+    
+    def add_retry_attempt(self):
+        self.retry_attempts += 1
+    
     def get_average_ingestion_time(self) -> float:
         return sum(self.ingestion_times) / len(self.ingestion_times) if self.ingestion_times else 0
     
     def get_average_query_time(self) -> float:
         return sum(self.query_times) / len(self.query_times) if self.query_times else 0
+    
+    def get_reliability_metrics(self) -> Dict[str, Any]:
+        """Get reliability-focused metrics"""
+        return {
+            "timeout_errors": self.timeout_errors,
+            "retry_attempts": self.retry_attempts,
+            "success_rate": max(0, 1 - (self.timeout_errors / max(1, len(self.ingestion_times) + len(self.query_times))))
+        }
     
     def get_performance_summary(self) -> Dict[str, Any]:
         return {
@@ -94,6 +127,7 @@ class PerformanceMetrics:
             "avg_query_time": self.get_average_query_time(),
             "total_ingestions": len(self.ingestion_times),
             "total_queries": len(self.query_times),
+            "reliability": self.get_reliability_metrics()
         }
 
 # Global performance tracker
