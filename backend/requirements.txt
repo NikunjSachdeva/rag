@@ -6,7 +6,7 @@ Pydantic >= 2.5.0
 
 # Vector database
 
-pinecone-client
+pinecone
 
 # AI/ML libraries with performance optimizations
 langchain
