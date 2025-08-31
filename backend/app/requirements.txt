@@ -5,6 +5,7 @@ uvicorn[standard]==0.24.0
 pydantic==1.10.13
 
 # Vector database
+numpy>=1.22.0,<2.0.0
 pinecone-client==2.2.4
 
 # AI/ML libraries with performance optimizations
@@ -22,7 +23,6 @@ asyncio-throttle==1.0.2
 
 # Environment and configuration
 python-dotenv==1.0.0
-
 
 
 # Optional: For production deployment
