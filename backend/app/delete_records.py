@@ -2,7 +2,7 @@ import os
 from pinecone import Pinecone
 
 # Fetch from environment
-api_key = "pcsk_45xr3J_GjT43c1aigaYuhbL93JeW9jNiAidMXysgxLg9ov4qmJRwcrm1tuVzqxtva4eang"
+api_key = "api"
 
 if not api_key:
     raise ValueError("❌ PINECONE_API_KEY not set in environment variables")

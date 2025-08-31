@@ -23,14 +23,14 @@ index = pc.Index(os.getenv("PINECONE_INDEX"))
 embeddings = GoogleGenerativeAIEmbeddings(
     model="models/embedding-001",
     google_api_key=os.getenv("GOOGLE_API_KEY"),
-    request_timeout=120,  # Increased timeout to 2 minutes
+    request_timeout=20,  # Increased timeout to 2 minutes
     max_retries=3,        # Increased retries
     temperature=0.0        # Deterministic embeddings
 )
 
 # Optimized text splitter with better chunking strategy for citations
 text_splitter = RecursiveCharacterTextSplitter(
-    chunk_size=800,   # Reduced chunk size to avoid timeouts
+    chunk_size=500,   # Reduced chunk size to avoid timeouts
     chunk_overlap=120, # Reduced overlap proportionally
     length_function=len,
     separators=["\n\n", "\n", ". ", " ", ""]  # More intelligent splitting

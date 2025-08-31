@@ -18,8 +18,8 @@ class AnswerService:
             model="gemini-1.5-flash",
             google_api_key=os.getenv("GOOGLE_API_KEY"),
             temperature=0.1,  # Low temperature for consistent, factual answers
-            max_output_tokens=2048,
-            request_timeout=60
+            max_output_tokens=200,
+            request_timeout=20
         )
         
         # System prompt for citation-aware answering
