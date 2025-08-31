@@ -14,7 +14,7 @@ google-generativeai==0.3.2
 
 # Reranking
 cohere==4.37
-
+tokenizers>=0.13.2 --only-binary=:all:
 # Async and performance libraries
 aiohttp==3.9.1
 httpx==0.25.2
