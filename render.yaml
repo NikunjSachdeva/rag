@@ -1,0 +1,15 @@
+services:
+  - type: web
+    name: rag-backend
+    env: python
+    buildCommand: pip install -r requirements.txt
+    startCommand: uvicorn rag.backend.app.main:app --host 0.0.0.0 --port $PORT
+    envVars:
+      - key: PINECONE_API_KEY
+        sync: false
+      - key: PINECONE_INDEX
+        sync: false
+      - key: GOOGLE_API_KEY
+        sync: false
+      - key: COHERE_API_KEY
+        sync: false
