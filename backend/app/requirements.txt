@@ -2,7 +2,7 @@
 # Core FastAPI and async support
 fastapi==0.104.1
 uvicorn[standard]==0.24.0
-pydantic==2.5.0
+pydantic==1.10.13
 
 # Vector database
 pinecone-client==2.2.4
