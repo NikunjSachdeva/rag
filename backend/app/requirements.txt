@@ -1,8 +1,8 @@
 # Optimized RAG Backend Requirements
 # Core FastAPI and async support
-fastapi==0.104.1
+FastAPI >= 0.110.0
 uvicorn[standard]==0.24.0
-pydantic==1.10.13
+Pydantic >= 2.5.0
 
 # Vector database
 
