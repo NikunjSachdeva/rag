@@ -16,7 +16,7 @@ google-generativeai==0.3.2
 cohere==4.37
 tokenizers>=0.13.2 --only-binary=:all:
 # Async and performance libraries
-aiohttp==3.9.1
+aiohttp
 httpx==0.25.2
 asyncio-throttle==1.0.2
 
