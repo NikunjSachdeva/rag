@@ -7,7 +7,7 @@ from hashlib import sha256
 from typing import List, Dict, Any
 from pinecone import Pinecone
 from langchain_google_genai import GoogleGenerativeAIEmbeddings
-from langchain.text_splitter import RecursiveCharacterTextSplitter
+from langchain_text_splitter import RecursiveCharacterTextSplitter
 from langchain.docstore.document import Document
 from dotenv import load_dotenv
 import aiohttp
