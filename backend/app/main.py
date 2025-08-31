@@ -2,7 +2,7 @@
 from fastapi import FastAPI, BackgroundTasks, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
-from services.ingest import ingest_text_async, ingest_text
+from services.ingest import ingest_text, ingest_text_async
 from services.retrieve import retrieve_async, retrieve
 from services.rerank import rerank_async, rerank
 from services.answer import generate_answer_with_citations, generate_answer_with_citations_sync
@@ -91,6 +91,13 @@ async def ingest_documents(
             "message": error_msg,
             "error_type": "general"
         }
+
+# @app.post("/ingest")
+# async def ingest(req: IngestRequest):
+#     # ✅ Changed: Now returns simple integer count
+#     n_chunks = ingest_text(req.text, req.source, req.title)
+#     return {"status": "ok", "chunks_ingested": n_chunks}
+
 
 @app.post("/ingest/sync")
 async def ingest_sync(req: IngestRequest):
@@ -326,3 +333,4 @@ async def get_stats():
             status_code=500, 
             detail=f"Failed to get stats: {str(e)}"
         )
+
