@@ -1,0 +1,36 @@
+# Optimized RAG Backend Requirements
+# Core FastAPI and async support
+fastapi==0.104.1
+uvicorn[standard]==0.24.0
+pydantic==2.5.0
+
+# Vector database
+pinecone-client==2.2.4
+
+# AI/ML libraries with performance optimizations
+langchain==0.1.0
+langchain-google-genai==0.0.6
+google-generativeai==0.3.2
+
+# Reranking
+cohere==4.37
+
+# Async and performance libraries
+aiohttp==3.9.1
+httpx==0.25.2
+asyncio-throttle==1.0.2
+
+# Environment and configuration
+python-dotenv==1.0.0
+
+# Performance monitoring and optimization
+psutil==5.9.6
+memory-profiler==0.61.0
+
+# Development and testing
+pytest==7.4.3
+pytest-asyncio==0.21.1
+pytest-benchmark==4.0.0
+
+# Optional: For production deployment
+gunicorn==21.2.0
